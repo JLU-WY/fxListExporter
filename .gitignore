@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Folders
+fxListExporter/Debug
+fxListExporter/SDCard
+
+# Other files
+*.G1A
+*.bat
+*.dlw
