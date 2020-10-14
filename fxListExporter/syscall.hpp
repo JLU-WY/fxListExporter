@@ -14,8 +14,6 @@ SCA SCB SCE.
 
 
 
-#include "fxBCD.hpp"
-
 
 #define SCA 0xD201D002
 #define SCB 0x422B0009
