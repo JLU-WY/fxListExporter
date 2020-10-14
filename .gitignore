@@ -33,9 +33,11 @@
 
 # Folders
 fxListExporter/Debug
+fxListExporter/INIT
 fxListExporter/SDCard
 
 # Other files
 *.G1A
 *.bat
 *.dlw
+*.dlr

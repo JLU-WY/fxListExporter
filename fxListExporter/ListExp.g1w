@@ -13,3 +13,6 @@ LoadAddress=80000000:90100000
 
 [Files]
 SourceFile=:main.cpp
+SourceFile=:fxBCD.cpp
+HeaderFile=:fxBCD.hpp
+HeaderFile=:syscall.hpp
