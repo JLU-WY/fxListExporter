@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "fxList.hpp"
+#include "fxCSV.hpp"
 #include "syscall.hpp"
 
 
@@ -38,7 +39,7 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
     {
         // Convert result to string format 
 
-        sprintf(string_result, "%lf", *double_result);
+        sprintf(string_result, "%G", *double_result);
         free(double_result);
 
 
@@ -54,6 +55,7 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
     }
     
     free(string_result);
+
 
     GetKey(&key);
 
