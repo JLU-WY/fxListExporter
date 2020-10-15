@@ -35,6 +35,7 @@
 fxListExporter/Debug
 fxListExporter/INIT
 fxListExporter/SDCard
+.vscode
 
 # Other files
 *.G1A

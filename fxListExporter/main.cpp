@@ -26,30 +26,33 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
     Print((const unsigned char *)"fxListExporter demo");
     locate(1, 8);
     Print((const unsigned char *)"By Myth");
+    locate(1, 3);
+    Print((const unsigned char *)"List1[1]:");
 
 
     double *double_result = (double *)malloc(sizeof(double)); // double format result
     char *string_result = (char *)malloc(sizeof(char) * 22); // string format result
 
-    GetList(double_result, 1, 1);
+    
+    if (GetList(double_result, 1, 1))
+    {
+        // Convert result to string format 
+
+        sprintf(string_result, "%lf", *double_result);
+        free(double_result);
 
 
-    // Convert result to string format 
+        // Print string result
 
-    sprintf(string_result, "%lf", *double_result);
-    free(double_result);
-
-
-    // Print string result
-
-    locate(1, 3);
-    Print((const unsigned char *)"List1[1]:");
-
-    locate(1, 4);
-    Print((const unsigned char *)string_result);
-
-
-
+        locate(1, 4);
+        Print((const unsigned char *)string_result);
+    }
+    else
+    {
+        locate(1, 4);
+        Print((const unsigned char *)"NO VALUE!");
+    }
+    
 
     GetKey(&key);
 

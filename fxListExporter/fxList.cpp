@@ -49,10 +49,11 @@ void itoa(int n, char s[])
 
 
 // Get List col[row] in double format
+// If no data in that grid, return 0
 int GetList(double *double_value, int col, int row)
 {
     TBCDvalue *bcd_value = (TBCDvalue *)malloc(sizeof(TBCDvalue)); // TBCDvalue format result
-    
+ 
 
     // Calculate expression: Listcol[row]
     
@@ -85,12 +86,14 @@ int GetList(double *double_value, int col, int row)
    
 
     // Get the result of List col[row] in BCD format
-    CalculateExpression(&expression, opcode, bcd_value, mode); 
+    // CalculateExpression() return 0 means no data in that grid
+    if (!CalculateExpression(&expression, opcode, bcd_value, mode))
+        return 0;
 
 
     // Convert result to double format 
 
-    TBCD *bcd = new TBCD;;
+    TBCD *bcd = new TBCD;
     bcd->Set(*bcd_value);
     bcd->Get(*double_value);
     delete bcd;
