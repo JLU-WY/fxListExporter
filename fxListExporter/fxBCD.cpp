@@ -154,7 +154,6 @@ void TBCD::Swap()
 
 
 
-
 #ifdef __cplusplus
 }
 #endif

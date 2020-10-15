@@ -53,6 +53,7 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
         Print((const unsigned char *)"NO VALUE!");
     }
     
+    free(string_result);
 
     GetKey(&key);
 
