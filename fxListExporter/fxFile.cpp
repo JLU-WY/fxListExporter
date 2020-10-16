@@ -39,13 +39,13 @@ FONTCHARACTER *CharToFont(char *str)
 
 
 // Change file name to file path, and change string to FONTCHARACTER format
-FONTCHARACTER *CharFileNameToFontFilePath(char *file_name, int storge)
+FONTCHARACTER *CharFileNameToFontFilePath(char *file_name, int storage)
 {
     char *file_path = (char *)malloc(sizeof(char) * (strlen(file_name) + 8));
     file_path[0] = '\0';
 
     // path
-    if (storge == FLASH)
+    if (storage == FLASH)
         strcat(file_path, "\\\\fls0\\");
     else strcat(file_path, "\\\\crd0\\");
     
@@ -60,9 +60,9 @@ FONTCHARACTER *CharFileNameToFontFilePath(char *file_name, int storge)
 
 
 // Create file. If fail, return 0
-int FileCreate(char *file_name, int storge, int file_size)
+int FileCreate(char *file_name, int storage, int file_size)
 {
-    FONTCHARACTER *font_file_path = CharFileNameToFontFilePath(file_name, storge);
+    FONTCHARACTER *font_file_path = CharFileNameToFontFilePath(file_name, storage);
 
     if (Bfile_CreateFile(font_file_path, file_size) == 0) // Success
     {
@@ -80,9 +80,9 @@ int FileCreate(char *file_name, int storge, int file_size)
 
 
 // Delete file. If fail, return 0
-int FileDelete(char *file_name, int storge)
+int FileDelete(char *file_name, int storage)
 {
-    FONTCHARACTER *font_file_path = CharFileNameToFontFilePath(file_name, storge);
+    FONTCHARACTER *font_file_path = CharFileNameToFontFilePath(file_name, storage);
 
     if (Bfile_DeleteFile(font_file_path) == 0) // Success
     {
@@ -100,9 +100,9 @@ int FileDelete(char *file_name, int storge)
 
 
 // Open file, return file handle. If fail, return 0
-int FileOpen(char *file_name, int storge)
+int FileOpen(char *file_name, int storage)
 {
-    FONTCHARACTER *font_file_path = CharFileNameToFontFilePath(file_name, storge);
+    FONTCHARACTER *font_file_path = CharFileNameToFontFilePath(file_name, storage);
 
     int return_val = Bfile_OpenFile(font_file_path, _OPENMODE_READWRITE);
 
@@ -122,7 +122,6 @@ int FileCalcCSVSize(int col_amount, int *col, int row_amount, int *row)
     int i;
     for (i = 0; i < row_amount; i++)
     {
-        // use \n to end a CSV line
         char *line = GenerateCSVLine(col_amount, col, row[i], LINE_END_TYPE_1);
 
         size += strlen(line);
@@ -135,14 +134,14 @@ int FileCalcCSVSize(int col_amount, int *col, int row_amount, int *row)
 
 
 // Create and open file and write CSV. If fail, return 0
-int FileGenerateCSV(char *file_name, int storge, int col_amount, int *col, int row_amount, int *row)
+int FileGenerateCSV(char *file_name, int storage, int col_amount, int *col, int row_amount, int *row)
 {
     // create
-    if (!FileCreate(file_name, storge, FileCalcCSVSize(col_amount, col, row_amount, row)))
+    if (!FileCreate(file_name, storage, FileCalcCSVSize(col_amount, col, row_amount, row)))
         return 0;
     
     // open
-    int file_handle = FileOpen(file_name, storge);
+    int file_handle = FileOpen(file_name, storage);
 
     if (!file_handle) // fail to open file
         return 0;
