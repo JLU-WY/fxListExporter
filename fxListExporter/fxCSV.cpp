@@ -21,18 +21,19 @@ extern "C"
 #include "fxList.hpp"
 
 
+// Generate CSV line
 char *GenerateCSVLine(int col_amount, int* col, int row, int line_end_type)
 {
-    char *line = (char *)malloc(sizeof(char) * (col_amount * 14 + 1)); // string format result
+    char *line = (char *)malloc(sizeof(char) * (col_amount * 14 + 1));
     line[0] = '\0';
     
     
     int i;
     for (i = 0; i < col_amount; i++)
     {
-        double *doubel_val = (double *)malloc(sizeof(double)); // double format value
+        double *doubel_val = GetList(col[i], row); // double format value
 
-        if (GetList(doubel_val, col[i], row))
+        if (doubel_val) // data grid
         {
             char *string_val = (char *)malloc(sizeof(char) * 13); // string format value
 
@@ -42,14 +43,14 @@ char *GenerateCSVLine(int col_amount, int* col, int row, int line_end_type)
 
             free(string_val);
         }
-        else
+        else // no data grid
         {
             strcat(line, "N/A");
         }
 
         free(doubel_val);
 
-        if (i == col_amount - 1)
+        if (i == col_amount - 1) // last grid in that row
         {
             if (line_end_type == LINE_END_TYPE_1)
                 strcat(line, "\n");
@@ -63,6 +64,8 @@ char *GenerateCSVLine(int col_amount, int* col, int row, int line_end_type)
 
     return line;
 }
+
+
 
 
 #ifdef __cplusplus

@@ -18,7 +18,7 @@ Generate CSV line in string format.
 // use \n to end a line
 #define LINE_END_TYPE_1 0
 
-// use $ to end a line
+// use $ to end a line. Designed for QR code
 #define LINE_END_TYPE_2 1
 
 

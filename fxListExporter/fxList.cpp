@@ -28,32 +28,34 @@ const unsigned int sc645[] = {SCA, SCB, SCE, 0x645};
 // itoa function
 void itoa(int n, char s[])
 {
-     int i, j, sign;
-     char c;
+    int i, j, sign;
+    char c;
 
-     if ((sign = n) < 0)
-         n = -n;
-     i = 0;
-     do {
-         s[i++] = n % 10 + '0';
-     } while ((n /= 10) > 0);
-     if (sign < 0)
-         s[i++] = '-';
-     s[i] = '\0';
-     for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
-         c = s[i];
-         s[i] = s[j];
-         s[j] = c;
-     }
+    if ((sign = n) < 0)
+        n = -n;
+    i = 0;
+    do
+    {
+        s[i++] = n % 10 + '0';
+    } while ((n /= 10) > 0);
+    if (sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
+    {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
 }
 
 
 // Get List col[row] in double format
-// If no data in that grid, return 0
-int GetList(double *double_value, int col, int row)
+// If no data in that grid, return NULL
+double *GetList(int col, int row)
 {
     TBCDvalue *bcd_value = (TBCDvalue *)malloc(sizeof(TBCDvalue)); // TBCDvalue format result
- 
+    double *double_value = (double *)malloc(sizeof(double)); // double value
 
     // Calculate expression: Listcol[row]
     
@@ -88,7 +90,7 @@ int GetList(double *double_value, int col, int row)
     // Get the result of List col[row] in BCD format
     // CalculateExpression() return 0 means no data in that grid
     if (!CalculateExpression(&expression, opcode, bcd_value, mode))
-        return 0;
+       return NULL;
 
 
     // Convert result to double format 
@@ -100,7 +102,7 @@ int GetList(double *double_value, int col, int row)
     free(bcd_value);
 
 
-    return 1;
+    return double_value;
 }
 
 

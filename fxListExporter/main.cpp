@@ -9,11 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "fxList.hpp"
-#include "fxCSV.hpp"
-#include "syscall.hpp"
-
-
+#include "fxFile.hpp"
 
 
 int AddIn_main(int isAppli, unsigned short OptionNum)
@@ -28,33 +24,17 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
     locate(1, 8);
     Print((const unsigned char *)"By Myth");
     locate(1, 3);
-    Print((const unsigned char *)"List1[1]:");
+    Print((const unsigned char *)"Generate 3x3 CSV file");
 
 
-    double *double_result = (double *)malloc(sizeof(double)); // double format result
-    char *string_result = (char *)malloc(sizeof(char) * 22); // string format result
+    // Generate a 3x3 CSV file
+    int col_amount = 3;
+    int col[3] = {1, 2, 3};
 
+    int row_amount = 3;
+    int row[3] = {1, 2, 3};
     
-    if (GetList(double_result, 1, 1))
-    {
-        // Convert result to string format 
-
-        sprintf(string_result, "%G", *double_result);
-        free(double_result);
-
-
-        // Print string result
-
-        locate(1, 4);
-        Print((const unsigned char *)string_result);
-    }
-    else
-    {
-        locate(1, 4);
-        Print((const unsigned char *)"NO VALUE!");
-    }
-    
-    free(string_result);
+    FileGenerateCSV("LIST.CSV", FLASH, col_amount, col, row_amount, row);
 
 
     GetKey(&key);
