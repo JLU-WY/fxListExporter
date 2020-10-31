@@ -16,6 +16,7 @@ Get List in double format.
 #include <string.h>
 
 #include "fxBCD.hpp"
+#include "fxString.hpp"
 #include "syscall.hpp"
 
 
@@ -23,31 +24,6 @@ Get List in double format.
 typedef int (*sc_CalculateExpression)(char **, char[2], TBCDvalue *, int);
 const unsigned int sc645[] = {SCA, SCB, SCE, 0x645};
 #define CalculateExpression (*(sc_CalculateExpression)sc645)
-
-
-// itoa function
-void itoa(int n, char s[])
-{
-    int i, j, sign;
-    char c;
-
-    if ((sign = n) < 0)
-        n = -n;
-    i = 0;
-    do
-    {
-        s[i++] = n % 10 + '0';
-    } while ((n /= 10) > 0);
-    if (sign < 0)
-        s[i++] = '-';
-    s[i] = '\0';
-    for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
-    {
-        c = s[i];
-        s[i] = s[j];
-        s[j] = c;
-    }
-}
 
 
 // Get List col[row] in double format

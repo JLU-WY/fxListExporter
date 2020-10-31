@@ -115,14 +115,14 @@ int FileOpen(char *file_name, int storage)
 
 
 // Calculate the size of the CSV file
-int FileCalcCSVSize(int col_amount, int *col, int row_amount, int *row)
+int FileCalcCSVSize(int col_amount, int *col, int max_row)
 {
     int size = 0;
     
     int i;
-    for (i = 0; i < row_amount; i++)
+    for (i = 1; i <= max_row; i++)
     {
-        char *line = GenerateCSVLine(col_amount, col, row[i], LINE_END_TYPE_1);
+        char *line = GenerateCSVLine(col_amount, col, i, LINE_END_TYPE_1);
 
         size += strlen(line);
 
@@ -134,10 +134,10 @@ int FileCalcCSVSize(int col_amount, int *col, int row_amount, int *row)
 
 
 // Create and open file and write CSV. If fail, return 0
-int FileGenerateCSV(char *file_name, int storage, int col_amount, int *col, int row_amount, int *row)
+int FileGenerateCSV(char *file_name, int storage, int col_amount, int *col, int max_row)
 {
     // create
-    if (!FileCreate(file_name, storage, FileCalcCSVSize(col_amount, col, row_amount, row)))
+    if (!FileCreate(file_name, storage, FileCalcCSVSize(col_amount, col, max_row)))
         return 0;
     
     // open
@@ -150,10 +150,10 @@ int FileGenerateCSV(char *file_name, int storage, int col_amount, int *col, int 
     Bfile_SeekFile(file_handle, 0);
 
     int i;
-    for (i = 0; i < row_amount; i++)
+    for (i = 1; i <= max_row; i++)
     {
         // use \n to end a CSV line
-        char *line = GenerateCSVLine(col_amount, col, row[i], LINE_END_TYPE_1);
+        char *line = GenerateCSVLine(col_amount, col, i, LINE_END_TYPE_1);
 
         // write a CSV line into file
         Bfile_WriteFile(file_handle, line, strlen(line));

@@ -32,7 +32,7 @@ int FileDelete(char* file_name, int storage);
 int FileOpen(char* file_name, int storage);
 
 // Create and open and write CSV. If fail ,return 0
-int FileGenerateCSV(char* file_name, int storage, int col_amount, int *col, int row_amount, int *row);
+int FileGenerateCSV(char* file_name, int storage, int col_amount, int *col, int max_row);
 
 
 
