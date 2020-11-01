@@ -1,3 +1,12 @@
+/*
+main.cpp
+
+Copyright 2020 Myth
+
+See https://github.com/Mythologyli/fxListExporter
+*/
+
+
 #ifdef __cplusplus
   extern "C" {
 #endif
@@ -11,8 +20,12 @@
 
 #include "fxFile.hpp"
 #include "fxInput.hpp"
+#include "fxQR.hpp"
 #include "MonochromeLib.h"
 
+
+// save method
+#define QR 2
 
 
 
@@ -26,7 +39,7 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
 
     // Print program info
     locate(1, 1);
-    PrintRev((const unsigned char *)" fxListExporter v1.0  ");
+    PrintRev((const unsigned char *)" fxListExporter v2.0  ");
     locate(1, 4);
     Print((const unsigned char *)"   Copyright 2020");
     locate(1, 5);
@@ -114,8 +127,8 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
     Print((const unsigned char *)"[1]: Storage");
     locate(1, 5);
     Print((const unsigned char *)"[2]: SD Card");
-    //locate(1, 6);
-    //Print((const unsigned char *)"[3]: Show QR code");
+    locate(1, 6);
+    Print((const unsigned char *)"[3]: Show QR code");
 
     while (1)
     {
@@ -131,33 +144,44 @@ int AddIn_main(int isAppli, unsigned short OptionNum)
             save_method = SDCARD;
             break;
         }
-        //else if (key == KEY_CHAR_3)
+        else if (key == KEY_CHAR_3)
+        {
+            save_method = QR;
+            break;
+        }
     }
 
 
     ML_clear_vram();
 
-    // if file already exists
-    if (!FileGenerateCSV("LIST.CSV", save_method, col_amount, col, max_row))
+    if (save_method == QR)
     {
-        locate(1, 2);
-        Print((const unsigned char *)"File already exists!");
-        locate(1, 8);
-        Print((const unsigned char *)"Press F1 to overwrite.");
-
-        // wait for F1 key
-        do GetKey(&key);
-        while (key != KEY_CTRL_F1);
-
-        FileDelete("LIST.CSV", save_method);
-
-        FileGenerateCSV("LIST.CSV", save_method, col_amount, col, max_row);
+        QRShowCSV(col_amount, col, max_row);
     }
+    else
+    {
+        // if file already exists
+        if (!FileGenerateCSV("LIST.CSV", save_method, col_amount, col, max_row))
+        {
+            locate(1, 2);
+            Print((const unsigned char *)"File already exists!");
+            locate(1, 8);
+            Print((const unsigned char *)"Press F1 to overwrite.");
+
+            // wait for F1 key
+            do GetKey(&key);
+            while (key != KEY_CTRL_F1);
+
+            FileDelete("LIST.CSV", save_method);
+
+            FileGenerateCSV("LIST.CSV", save_method, col_amount, col, max_row);
+        }
 
 
-    ML_clear_vram();
-    locate(1, 2);
-    Print((const unsigned char *)"Success!");
+        ML_clear_vram();
+        locate(1, 2);
+        Print((const unsigned char *)"Success!");
+    }
 
     
     GetKey(&key);
