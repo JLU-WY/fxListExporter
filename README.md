@@ -7,6 +7,8 @@ fxListExporter is an Add-in for fx-9860 series calculators. It can help you expo
 + Display a QR code.
 + Choose the columns and rows you want.
 
+[中文说明](https://www.cncalc.org/thread-24753-1-1.html)
+
 ## Known Issue
 When using QR code mode, this tool can't export too much data once.
 
